@@ -1,0 +1,55 @@
+﻿@model List<ExamPreviewVM>
+@{
+    ViewData["Title"] = "ProfessorIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Home", "Dashboard")">Radna ploča</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Rezultati</span>
+        </li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <label style="margin-bottom:1.25rem;">Lista testova</label>
+        <table class="table">
+
+            <tbody class="exams">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align: left;">@item.Title <span>(@item.Course)</span></td>
+                        <td>
+                            <a class="btn btn-outline-primary btn-sm" href="@Url.Action("ListOfResults","Results", new { examID = @item.ExamID})"> Rezultati </a>
+                           
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .exams td {
+        font-size: 0.98rem;
+        font-weight: bold;
+    }
+    .exams td span {
+        font-size: 0.9rem;
+        font-weight: 100;
+    }
+     .exams td .btn{
+         color:#007bff!important;
+     }
+          .exams td .btn:hover{
+         color:#fff!important;
+     }
+</style>

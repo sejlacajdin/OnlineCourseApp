@@ -1,0 +1,103 @@
+﻿@model List<CourseTypeVM>
+@{
+    var brojac = 0;
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Prikaz","CourseSection")">Sekcije kursa</a>
+            <i class="fa fa-arrow-circle-right"></i>
+        </li>
+        <li>
+            <span>Tipovi kursa</span>
+        </li>
+    </ul>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary" id="btn-popup3">
+                Dodaj tip kursa
+            </button>
+
+
+        </div>
+    </div>
+</div>
+<table class="table table-striped table-bordered" style="background:white;">
+    <thead>
+        <tr>
+            <th scope="col">Redni broj</th>
+            <th scope="col">Tip kursa</th>
+            <th scope="col">Opis</th>
+            <th scope="col">Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (CourseTypeVM x in Model)
+        {
+            @if (x.Name != null)
+            {
+                <tr>
+                    <th scope="row"> @(++brojac)  </th>
+                    <td>  @x.Name </td>
+                    <td>  @x.Description </td>
+                    <td>
+                        <a href="/CourseType/Obrisi?courseTypeID=@x.CourseTypeID" class="btn btn-danger">Obriši</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+
+<div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-url="@Url.Action("DodajForma","CourseType")">
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $("#btn-popup3").click(function () {
+                event.preventDefault();
+                var url = $("#exampleModalCenter3").data('url');
+                jQuery.get(url, function (data) {
+
+                    $("#exampleModalCenter3").html(data);
+                    $("#exampleModalCenter3").modal('show');
+
+
+                })
+            })
+        });
+    </script>
+}
+<style>
+    label {
+        margin-bottom: 0px;
+    }
+
+    .container-fluid {
+        padding: 15px;
+        background: white;
+        margin-bottom: 25px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+    }
+
+    #btn-popup3 {
+        width: 100%;
+    }
+</style>

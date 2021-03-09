@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Postavke";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Home", "Dashboard")">Radna ploča</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Postavke</span>
+        </li>
+    </ul>
+</div>
+
+<div class="settings">
+    <a href="@Url.Action("Prikaz","City")">
+    <div>
+        Gradovi
+    </div>
+         
+    </a>
+    <a href="@Url.Action("Professors", "Settings")">
+    <div>
+        Profesori
+    </div>
+
+    </a>
+</div>
+
+<style>
+    .settings{
+        display:flex;
+        flex-wrap:wrap;
+        padding:15px;
+    }
+    .settings div{
+        width: 250px;
+        background-color: white;
+        height: 130px;
+        border-radius: 15px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        box-shadow: 0 0 20px rgba(197, 201, 214, 0.5);
+        font-family: Rubik,sans-serif;
+        color: #3496c58a;
+        letter-spacing: .5px;
+        font-size: 1.45rem;
+        margin-right: 30px;
+        font-weight: 900;
+    }
+    .settings a {
+        text-decoration:none;
+    }
+        .settings div:hover {
+        font-size: 1.55rem;
+
+        }
+</style>

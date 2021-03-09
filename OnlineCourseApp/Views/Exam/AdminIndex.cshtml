@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Ispiti";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var exams = (List<ExamPreviewVM>) ViewData["exams"];
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Home", "Dashboard")">Radna ploča</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Testovi</span>
+        </li>
+    </ul>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary btn-popup" data-container="body" data-modaltitle="Dodaj kategoriju pitanja" data-url="@Url.Action("AddQuestionCategoryForm","Question")"><i class="fa fa-plus-circle"></i> Dodaj kategoriju pitanja</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-hover">
+
+            <tbody class="exams">
+                @foreach (var item in exams)
+                {
+                    <tr>
+                        <td style="text-align: left;" data-toggle="tooltip" data-placement="top" title="Detalji" onclick="location.href = '@(Url.Action("Details","Exam",new {examID = item.ExamID}))'" >@item.Title <span>(@item.Course)</span></td>
+                        <td>
+                            <a class="btn-popup" data-container="body" data-modaltitle="Uredi ispit" data-url="@Url.Action("Edit","Exam",new { examID=item.ExamID})" style="margin-right:0.5rem;"> <i class="fa fa-edit"></i> </a>
+                            <a href="@Url.Action("Delete","Exam", new { examID=item.ExamID})"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .exams td{
+        font-size: 0.98rem;
+        font-weight: bold;
+    }
+     .exams tr{
+         cursor:pointer;
+     }
+        .exams td span{
+        font-size: 0.9rem;
+        font-weight:100;
+    }
+</style>

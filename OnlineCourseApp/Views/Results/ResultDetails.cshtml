@@ -1,0 +1,184 @@
+﻿@model List<QuestionDisplayVM>
+@{
+    ViewData["Title"] = "ResultDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<QuestionDetailsVM> questionDetails = ViewBag.QuestionDetails;
+    int examID = ViewBag.ExamID;
+    int studentID = ViewBag.StudentID;
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("ListOfResults", "Results", new { examID = examID})">Rezultati</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Detalji</span>
+        </li>
+    </ul>
+</div>
+
+<div class="card card-body">
+    @foreach (var item in Model)
+    {
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th colspan="2">
+
+                        @item.QuestionNumber. @item.Question
+                        <span style="float: right;">@item.Point bodova</span>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Odgovori studenta</td>
+                    @if (item.QuestionType.ToString() == "Essay")
+                    {
+                        <td>Dodaj bodove</td>
+
+                    }
+                    else
+                    {
+                        <td>Tačni odgovori</td>
+                    }
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+
+                            @if (item.QuestionType.ToString() == "MultipleChoice")
+                            {
+                                <ul class="js_choices">
+                                    @for (int i = 0; i < item.Options.Count; i++)
+                                    {
+                                        <li>
+
+
+                                            <input type="hidden" name="UserChoices[@i].ChoiceID" value="@item.Options[i].ChoiceID" />
+                                            <input name="UserChoices[@i].IsChecked" type="checkbox" @(!string.IsNullOrEmpty(item.Options[i].Answer) ? "checked" : "") />
+                                            @item.Options[i].Text
+
+
+                                        </li>
+
+                                    }
+                                </ul>
+
+                            }
+                            else if (item.QuestionType.ToString() == "Matching")
+                            {
+                                <ul class="js_choices">
+                                    @for (int i = 0; i < item.Options.Count; i++)
+                                    {
+                                        <li>
+                                            <input type="hidden" name="UserChoices[@i].ChoiceID" value="@item.Options[i].ChoiceID" />
+                                            <input name="UserChoices[@i].IsChecked" type="radio" @(!string.IsNullOrEmpty(item.Options[i].Answer) ? "checked" : "") />
+                                            @item.Options[i].Text
+                                        </li>
+
+                                    }
+                                </ul>
+
+                            }
+                            else if (item.QuestionType.ToString() == "Essay")
+                            {
+                                for (int i = 0; i < item.Options.Count; i++)
+                                {
+                                    <input type="hidden" name="UserChoices[@i].ChoiceID" value="@item.Options[i].ChoiceID" />
+                                    <p>@item.Options[0].Answer</p>
+                                    <br />
+
+                                }
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @foreach (var question in questionDetails)
+                        {
+                            if (question.QuestionID == item.QuestionID)
+                            {
+                                @if (question.QuestionType.ToString() == "MultipleChoice")
+                                {
+                                    <ul class="js_choices">
+                                        @for (int i = 0; i < question.Choises.Count; i++)
+                                        {
+                                            <li>
+                                                <input type="hidden" value="@question.Choises[i].ChoiceID" />
+                                                <input type="checkbox" @(question.Choises[i].IsCorrect == "Tačno" ? "checked" : "") />
+                                                @question.Choises[i].Text
+                                            </li>
+
+                                        }
+                                    </ul>
+
+                                }
+                                else if (item.QuestionType.ToString() == "Matching")
+                                {
+                                    <ul class="js_choices">
+                                        @for (int i = 0; i < question.Choises.Count; i++)
+                                        {
+                                            <li>
+                                                <input type="hidden" value="@question.Choises[i].ChoiceID" />
+                                                <input type="radio" @(question.Choises[i].IsCorrect == "Tačno" ? "checked" : "") />
+                                                @question.Choises[i].Text
+                                            </li>
+
+                                        }
+                                    </ul>
+
+                                }
+                                else if (item.QuestionType.ToString() == "Essay")
+                                {
+                                    @for (int i = 0; i < item.Options.Count; i++)
+                                    {
+                                        <form method="post" action="/Results/AddMarkedScoreForEssay">
+                                            <input type="hidden" name="examID" value="@examID" />
+                                            <input type="hidden" name="studentID" value="@studentID" />
+                                            <input type="hidden" name="answerID" value="@item.Options[i].ChoiceID" />
+                                            <input type="number" max="@item.Point" name="score" />
+                                            <input type="submit" class="btn btn-outline-primary btn-sm" value="Sačuvaj" />
+                                        </form>
+                                    }
+                                  }
+                                }
+                            }
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    }
+</div>
+
+<style>
+
+
+    .js_choices {
+        list-style-type: none;
+        text-align: left;
+    }
+
+    .card-body {
+        margin-top: 40px;
+        padding: 60px;
+    }
+
+    .table-bordered td {
+        text-align: left;
+        padding-left: 20px;
+    }
+
+    .table {
+        margin-bottom: 55px;
+    }
+    form{
+        display:flex;
+        align-items:center;
+        justify-content:space-evenly;
+    }
+</style>

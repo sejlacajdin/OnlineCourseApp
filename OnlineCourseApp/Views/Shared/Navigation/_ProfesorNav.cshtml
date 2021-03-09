@@ -1,0 +1,56 @@
+﻿<a href="@Url.Action("Home", "Dashboard")" class="@Html.IsActive("Dashboard", "Home")" id="announcement">
+    <i class="icon-home"></i><span>Radna ploča</span>
+    <span class="noti badge" style="font-size:100%;"><i class="fa fa-exclamation-circle" style="color: #d95459; font-size:17px;" aria-hidden="true"></i></span>
+</a>
+<a href="@Url.Action("GetCoursesByProfessor", "Course")" class="@Html.IsActive("Course", "GetCoursesByProfessor")"><i class="icon-layers"></i><span>Moji kursevi</span></a>
+<a href="@Url.Action("Index", "Exam")" class="@Html.IsActive("Exam", "Index")"><i class="icon-check"></i><span>Testovi</span></a>
+<a href="@Url.Action("ProfessorIndex", "Results")" class="@Html.IsActive("Results", "ProfessorIndex")"><i class="fa fa-list"></i><span>Rezultati</span></a>
+<ul class="nav navbar-nav">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            <i class="icon-notebook"></i><span>Obavijesti</span> <span class="caret"></span>
+          
+        </a>
+        <ul class="dropdown-menu">
+            <li><a style="color:gray !important" href="@Url.Action("New","Announcement")" class="@Html.IsActive("New", "Announcement")">Nova obavijest</a></li>
+            <li><a style="color:gray !important" href="@Url.Action("AnnouncementsForProfessors","Announcement")" class="@Html.IsActive("Index", "Announcement")">Upravljanje obavijestima</a></li>
+        </ul>
+
+    </li>
+</ul>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="~/js/SignalR/dist/browser/signalr.min.js"></script>
+
+<script>
+
+        $("#announcement").click(function (e) {
+            $("span.badge").css("display", "none");
+        });
+
+        function showNotification() {
+            $("span.badge").css("display", "inline-block");
+        }
+
+        $(function () {
+            var notificationHub = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+
+            notificationHub.start().then(function () {
+                console.log("Notification hub started");
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+
+            notificationHub.on("ReceiveNotification", function (message) {
+                if (message && message.toLowerCase() == "changed") {
+                    showNotification();
+                }
+            });
+        });
+
+</script>
+<style>
+    .badge {
+        display: none;
+    }
+</style>

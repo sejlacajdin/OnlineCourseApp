@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Ispiti";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var exams = (List<ExamPreviewVM>)ViewData["exams"];
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Home", "Dashboard")">Radna ploča</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Testovi</span>
+        </li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <label style="margin-bottom:1.25rem;">Lista testova</label>
+        <table class="table table-hover">
+
+            <tbody class="exams">
+                @foreach (var item in exams)
+                {
+                    <tr>
+                        <td style="text-align: left;" data-toggle="tooltip" data-placement="top" title="Detalji" onclick="location.href = '@(Url.Action("DetailsStudent","Exam",new {examID = item.ExamID}))'">@item.Title <span>(@item.Course)</span></td>
+                        <td>
+                            <a href="@(Url.Action("DetailsStudent","Exam",new {examID = item.ExamID}))"><i class="fa fa-info-circle"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .exams td {
+        font-size: 0.98rem;
+        font-weight: bold;
+    }
+
+    .exams tr {
+        cursor: pointer;
+    }
+
+    .exams td span {
+        font-size: 0.9rem;
+        font-weight: 100;
+    }
+</style>

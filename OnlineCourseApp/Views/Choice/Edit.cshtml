@@ -1,0 +1,33 @@
+﻿@model ChoiceEditVM
+@{
+    ViewData["Title"] = "Uredi odgovor";
+}
+
+    <div class="col-md-12">
+        <form asp-action="SpremiIzmjene" asp-controller="Choice" method="post">
+            <input asp-for="QuestionID" hidden />
+            <input asp-for="ExamID" hidden />
+            <input asp-for="ChoiceID" hidden />
+
+            <div class="form-group">
+                <label asp-for="Text">Tekst odgovora</label>
+                <textarea asp-for="Text" class="form-control"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Points">Bodovi</label>
+                <input type="number" asp-for="Points" class="form-control" />
+                <span asp-validation-for="Points" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Da li je odgovor tačan</label>
+                <select class="form-control" asp-for="IsCorrect" asp-items="@Model.correctList">
+                </select>
+            </div>
+            <input type="submit" class="btn btn-outline-primary" value="Sačuvaj">
+
+        </form>
+        </div>
+
+

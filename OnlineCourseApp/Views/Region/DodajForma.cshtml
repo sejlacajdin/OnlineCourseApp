@@ -1,0 +1,46 @@
+﻿
+        <form action="/Region/Dodaj" method="post" id="forma">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> Naziv regije</label>
+                    <input name="description" id="description" class="form-control" type="text" /> 
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvori</button>
+                <input type="submit" class="btn btn-primary" value="Sačuvaj" id="submit">
+            </div>
+        </form>
+
+<style>
+    .error {
+        color: darkred;
+        display: block;
+    }
+</style>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#forma").validate({
+                rules: {
+                    "nazivRegije": {
+                        required: true,
+                        lettersonly: true
+                    }
+                },
+                messages: {
+                    "nazivRegije": {
+                        required: 'Obavezno polje',
+                        lettersonly: 'Unesite naziv regije'
+                    }
+                }
+            });
+        });
+
+
+        $("#submit").click(function () {
+            if ($("#forma").valid())
+                return true;
+        });
+    </script>
+}

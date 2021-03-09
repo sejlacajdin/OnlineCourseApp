@@ -1,0 +1,275 @@
+﻿@using OnlineCourseApp.Enums
+@model QuestionDisplayVM
+@{
+    ViewData["Title"] = "EvalPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var endTime = DateTime.UtcNow.AddSeconds(((TimeSpan)ViewBag.TimeExpire).TotalSeconds);
+    var timeRemaining = TimeSpan.FromTicks(endTime.Ticks - DateTime.UtcNow.Ticks).TotalSeconds;
+}
+
+    <div class="card card-body" style="margin-top:25px;">
+
+        <div class="row">
+            <div class="col-md-12 test_top">
+                <div>Pitanje: @Model.QuestionNumber / @Model.TotalQuestionInSet</div>
+                <div style="display:flex;">
+                    <span style="    margin-right: 8px;">Vrijeme:</span> <div id="hms" class="hms" hidden="hidden">@ViewBag.Time</div>
+                    <div id="countTime"></div>
+                </div>
+            </div>
+            <p class="question">@Model.Question</p>
+
+        </div>
+
+        @using (Html.BeginForm("PostAnswer", "Exam", FormMethod.Post, new { @id = "form" }))
+        {
+            <input type="hidden" name="Direction" id="direction" value="forward" />
+            <input type="hidden" name="ExamID" value="@Model.ExamID" />
+            <input type="hidden" name="QuestionID" value="@Model.QuestionNumber" />
+
+
+            @if (Model.QuestionType == QuestionType.Matching)
+            {
+                <ul class="js_choices">
+                    @for (int i = 0; i < Model.Options.Count; i++)
+                    {
+                        <li>
+                            <input type="hidden" name="UserChoices[@i].ChoiceID" value="@Model.Options[i].ChoiceID" />
+                            <input name="UserChoices[@i].IsChecked" type="radio" @(!string.IsNullOrEmpty(Model.Options[i].Answer) ? "checked" : "") />
+                            @Model.Options[i].Text
+                        </li>
+
+                    }
+                </ul>
+            }
+            else if (Model.QuestionType == QuestionType.MultipleChoice)
+            {
+                <ul class="js_choices">
+                    @for (int i = 0; i < Model.Options.Count; i++)
+                    {
+                        <li>
+                            <input type="hidden" name="UserChoices[@i].ChoiceID" value="@Model.Options[i].ChoiceID" />
+                            <input name="UserChoices[@i].IsChecked" type="checkbox" @(!string.IsNullOrEmpty(Model.Options[i].Answer) ? "checked" : "") />
+                            @Model.Options[i].Text
+                        </li>
+
+                    }
+                </ul>
+            }
+            else if (Model.QuestionType == QuestionType.Essay)
+            {
+                for (int i = 0; i < Model.Options.Count; i++)
+                {
+                    <input type="hidden" name="UserChoices[@i].ChoiceID" value="@Model.Options[i].ChoiceID" />
+                    <textarea name="Answer" class="form-control">@Model.Options[0].Answer</textarea>
+                    <br />
+
+                }
+            }
+
+            <div class="navigation">
+                <a href="javascript:void(0);" class="btn btn-outline-secondary btn-sm" onclick="saveBackward(this)">Nazad</a>
+                <select id="dropdown">
+                    @for (int i = 0; i < Model.TotalQuestionInSet; i++)
+                    {
+                        <option value="@(i + 1)">
+                            @(i + 1)
+                        </option>
+                    }
+                </select>
+                <a href="javascript:void(0);" class="btn btn-outline-secondary btn-sm" id="btn_forward" onclick="saveForward(this)">Sljedeće</a>
+            </div>
+        }
+
+        <a @*href="@Url.Action("ExamFinished","Results", new { examID = Model.ExamID})"*@ href="javascript:void(0);" onclick="saveForward(this)" class="btn btn-danger" id="btn_finish">Završi</a>
+    </div>
+
+
+
+
+ @section Scripts {
+            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+      <script>
+        document.getElementById("dropdown").addEventListener("change", (function () {
+            var url ='/Exam/EvalPage?qno='+ $(this).val() +'&examID='+ @Model.ExamID;
+            window.location.assign(url);
+        }));
+
+        window.onload = function () {
+            let params = (new URL(window.location)).searchParams;
+            let qno = params.get("qno");
+            $('#dropdown option[value="' + qno + '"]').prop('selected', true);
+        }
+     </script>
+
+
+     <script>
+                $(document).ready(function () {
+
+                    $('ul.js_choices li input[type="radio"]').on('click', function () {
+                        var parentul = $(this).closest('ul.js_choices');
+                        $.each(parentul.find('input[type="radio"][name!="' + $(this).attr('name') + '"]:checked'), function (i, e) {
+                            $(e).prop('checked', false);
+                        });
+                    });
+                })
+
+      </script>
+
+     <script>
+         function saveForward(sender) {
+             $('#direction').val('forward');
+             $('#form').submit();
+         }
+         function saveBackward(sender) {
+             $('#direction').val('backward');
+             $('#form').submit();
+         }
+
+     </script>
+
+     @*<script>
+
+         remSeconds = @timeRemaining;
+         var secCounter = remSeconds % 60;
+
+         function formatNumber(number) {
+             if (number < 10) return '0' + number;
+             else return '' + number;
+         };
+
+         function startTicks() {
+             document.getElementById('secRemaining').innerText = formatNumber(secCounter);
+             document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+
+             var _tick = setInterval(function () {
+                 if (remSeconds <= 0) {
+                     alert('Your exam time has expired');
+                     clearInterval(_tick);
+                 }
+
+                 remSeconds -= 1;
+                 secCounter -= 1;
+                 document.getElementById('secRemaining').innerText = formatNumber(secCounter);
+                 document.getElementById('minRemaining').innerText = formatNumber(parseInt(remSeconds / 60));
+
+                 if (secCounter == 0)
+                     secCounter = 60;
+
+             }, 1000);
+         }
+
+            startTicks();
+
+     </script>*@
+
+     <script type="text/javascript">
+         var startTime = document.getElementById('hms').innerHTML;
+         if (localStorage.getItem("counter")) {
+             if (getjudgetime(localStorage.getItem("counter"))) {
+                 var value = startTime;
+             } else {
+                 var value = localStorage.getItem("counter");
+             }
+         } else {
+             var value = startTime;
+         }
+         document.getElementById('countTime').innerHTML = value;
+         var counter = function () {
+             if (getjudgetime(value)) {
+                 localStorage.removeItem("counter");
+                 clearInterval(interval);
+                 window.location.href="/Results/ExamFinished?examID="+@Model.ExamID;
+
+             } else {
+                 value = getnewtimestring(value);
+                 localStorage.setItem("counter", value);
+             }
+             document.getElementById('countTime').innerHTML = value;
+         };
+         var interval = setInterval(counter, 1000);
+
+         function getnewtimestring(oTime) {
+             var timedif = new Date(getnewtime(oTime).valueOf() - 1000);
+             var newtime = timedif.toTimeString().split(" ")[0];
+             return newtime;
+         }
+         function getnewtime(oTime) {
+             var pieces = oTime.split(":");
+             var time = new Date();
+             time.setHours(pieces[0]);
+             time.setMinutes(pieces[1]);
+             time.setSeconds(pieces[2]);
+             return time;
+         }
+         function getjudgetime(jTime) {
+             return getnewtime(jTime) <= getnewtime("00:00:00") ? true : false
+         }
+     </script>
+
+        <script>
+            window.onload = function () {
+                let params = (new URL(window.location)).searchParams;
+                let qno = params.get("qno");
+                var btn = document.getElementById("btn_finish");
+                var btn_forward = document.getElementById("btn_forward");
+                if (qno == @Model.TotalQuestionInSet) {
+                    btn.style.display = "block";
+                    btn_forward.style.display = "none";
+
+                }
+                else {
+                    btn.style.display = "none";
+                    btn_forward.style.display = "block";
+
+                }
+            }
+        </script>
+ }
+
+
+
+
+<style>
+    .card{
+        color: #252588;
+    }
+    #dropdown{
+        width:100px;
+    }
+    .navigation{
+        display:flex;
+        align-items:center;
+        justify-content: space-evenly;
+        width: 35%;
+        margin:0 auto;
+        margin-bottom: 20px;
+    }
+    .test_top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 39px;
+        padding: 0 30px;
+        font-size: 0.95rem;
+    }
+    .question{
+        margin: 9px auto;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    .js_choices{
+        text-align:center;
+        list-style-type: none;
+        margin-top: 39px;
+       margin-bottom: 90px;
+    }
+    #btn_finish{
+        color: white!important;
+        width: 120px;
+        margin: 53px auto 0 auto;
+        display:none;
+    }
+</style>

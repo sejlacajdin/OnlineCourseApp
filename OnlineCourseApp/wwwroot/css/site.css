@@ -1,0 +1,56 @@
+﻿*{
+    margin:0px;
+    padding:0px;
+    box-sizing:border-box;
+}
+.table td, .table th{
+    text-align:center;
+}
+.card {
+    margin-bottom: 30px;
+    border: none!important;
+    letter-spacing: .5px;
+    border-radius: 15px!important;
+    box-shadow: 0 0 20px rgba(8, 21, 66, 0.05);
+}
+    .card .card-body {
+        padding: 40px;
+        background-color: transparent;
+    }
+.container-fluid {
+    border: none !important;
+    padding: 15px;
+    background: white;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(8, 21, 66, 0.05);
+}
+.fa-trash-o {
+    font-size: 22px!important;
+    color: red;
+    cursor:pointer;
+}
+.fa-info-circle {
+    font-size: 21px !important;
+    color: #0c1a5d;
+    cursor: pointer;
+}
+.fa-edit {
+    font-size: 20px !important;
+    cursor: pointer;
+}
+tbody td a:hover{
+    text-decoration:none!important;
+}
+.col-md-3 > button{
+    width:100%;
+}
+.examDetalji p {
+    color: #0c1a5d;
+    margin-bottom: 0.65rem;
+}
+
+    .examDetalji p span {
+        font-size: 1rem;
+        font-weight: bold;
+    }

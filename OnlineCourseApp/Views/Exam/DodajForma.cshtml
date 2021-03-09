@@ -1,0 +1,59 @@
+﻿@model ExamAddVM
+@{
+    var courses = (List<SelectListItem>)ViewData["courses"];
+}
+
+
+        <form asp-action="Dodaj" asp-controller="Exam" method="post" id="forma">
+            <div class="modal-body">
+                <input asp-for="ExamID" style="display:none" />
+                <div class="form-group">
+                    <label asp-for="Title">Naslov</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Instructions">Upute</label>
+                    <textarea asp-for="Instructions" class="form-control"></textarea>
+                    <span asp-validation-for="Instructions" class="text-danger"></span>
+
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="ActivationDate">Datum aktivacije</label>
+                            <input asp-for="ActivationDate" type="datetime-local" class="form-control" value="@DateTime.Now" />
+                            <span asp-validation-for="ActivationDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="DeactivationDate">Datum deaktivacije</label>
+                            <input asp-for="DeactivationDate" type="datetime-local" class="form-control" value="@DateTime.Now" />
+                            <span asp-validation-for="DeactivationDate" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                    <div class="form-group">
+                        <label asp-for="TimeLimit">Trajanje u minutama</label>
+                        <input asp-for="TimeLimit"  class="form-control"/>
+                        <span asp-validation-for="TimeLimit" class="text-danger"></span>
+                    </div>
+                <div class="form-group">
+                    <label asp-for="CourseID">Kurs</label>
+                    <select asp-for="CourseID" asp-items="courses" class="form-control">
+                        <option disabled>(Odaberite kurs)</option>
+                    </select>
+                    <span asp-validation-for="CourseID" class="text-danger"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Sačuvaj" id="submit">
+                </div>
+            </div>
+        </form>
+
+

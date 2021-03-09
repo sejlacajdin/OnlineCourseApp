@@ -1,0 +1,44 @@
+﻿@model List<ResultsListVM>
+@{
+    ViewData["Title"] = "StudentIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Home", "Dashboard")">Radna ploča</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Rezultati</span>
+        </li>
+    </ul>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Kurs</th>
+                    <th>Naziv</th>
+                    <th>Datum</th>
+                    <th>Rezultat</th>
+                </tr>
+            </thead>
+            <tbody class="exams">
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.CourseName</td>
+                    <td>@item.ExamName</td>
+                    <td>@item.Date.ToString("dd.MM.yyyy hh:mm")</td>
+                    <td> @item.Result% </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,32 @@
+﻿@model ResultsListVM
+@{
+    ViewData["Title"] = "ExamFinished";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card card-body">
+
+    <p style="font-size: 25px;">@Model.ExamName</p>
+    <p>@Model.CourseName</p>
+    <p class="result">@Model.Result%</p>
+</div>
+
+<style>
+    .card{
+        margin-top:70px;
+         padding-top: 70px;
+    }
+        .card p {
+            width: fit-content;
+            margin: 0 auto;
+           
+        }
+    .result {
+        margin-top: 80px !important;
+        margin-bottom: 80px !important;
+        font-size: 37px;
+        font-weight: bold;
+        color: #14146d;
+    }
+</style>

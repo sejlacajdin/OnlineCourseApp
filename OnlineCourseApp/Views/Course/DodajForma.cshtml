@@ -1,0 +1,69 @@
+﻿@model CourseAddVM
+@{
+    var courseSections = (List<SelectListItem>)ViewData["courseSections"];
+}
+
+        <form asp-action="Dodaj" method="post" id="forma">
+            <div class="modal-body">
+                <input asp-for="CourseID" style="display:none" />
+                <div class="form-group">
+                    <label>Naziv kursa</label>
+                    <input asp-for="CourseName" type="text" class="form-control" name="CourseName" id="nazivKursa" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Početak kursa</label>
+                            <input asp-for="Start" type="date" class="form-control" name="Start" id="pocetakKrsa" value="@DateTime.Now"/>
+                            <span asp-validation-for="Start" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Kraj kursa</label>
+                            <input asp-for="End" type="date" class="form-control" name="End" id="krajKursa" />
+                            <span asp-validation-for="End" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label>Oblasti kursa</label>
+                    <select asp-for="CourseSectionID" asp-items="courseSections" class="form-control">
+                        <option disabled>(Odaberite oblast kursa)</option>
+                    </select>
+                    <span asp-validation-for="CourseSectionID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex; align-items:center">
+                        <input asp-for="EnableCourseSessions" type="checkbox" name="EnableCourseSessions" id="sesijeKursa" />
+                        <label style="margin-left:20px;">Omogući sesije kursa</label>
+                    </div>
+                    <span asp-validation-for="EnableCourseSessions" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div style="display:flex; align-items:center">
+                        <input asp-for="EnableVideoRecording" type="checkbox" name="EnableVideoRecording" id="snimanjeKursa" />
+                        <label style="margin-left:20px;">Omogući video snimanje</label>
+                    </div>
+                    <span asp-validation-for="EnableVideoRecording" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Bilješka</label>
+                    <textarea asp-for="Notes" type="text" class="form-control" name="Notes" id="biljeska"></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Sačuvaj" id="submit">
+                </div>
+            </div>
+        </form>
+
+
+<style>
+    .error {
+        color: darkred;
+        display: block;
+    }
+</style>

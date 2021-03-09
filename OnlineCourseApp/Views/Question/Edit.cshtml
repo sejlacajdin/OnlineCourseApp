@@ -1,0 +1,41 @@
+﻿@model QuestionEditVM
+@{
+    ViewData["Title"] = "Uredi pitanje";
+}
+
+    <div class="col-md-12">
+        <form asp-action="SpremiIzmjene" asp-controller="Question" method="post">
+            <input asp-for="QuestionID" hidden />
+            <input asp-for="ExamID" hidden />
+            <div class="form-group">
+                <label>Kategorija pitanja</label>
+                <select class="form-control" asp-for="@Model.QuestionCategoryID" asp-items="@Model.QuestionCategoryList">
+                    <option disabled>Odaberite kategoriju</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tip pitanja</label>
+                <select class="form-control" asp-for="@Model.QuestionType" asp-items="@Model.QuestionTypeList">
+                    <option disabled>Odaberite tip</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Points">Bodovi</label>
+                <input type="number" asp-for="Points" class="form-control" />
+                <span asp-validation-for="Points" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Text">Tekst pitanja</label>
+                <textarea asp-for="Text" class="form-control"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+
+            </div>
+
+            <input type="submit" class="btn btn-outline-primary" value="Sačuvaj">
+
+        </form>
+        </div>
+
+

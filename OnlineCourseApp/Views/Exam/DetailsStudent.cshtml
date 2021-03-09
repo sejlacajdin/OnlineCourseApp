@@ -1,0 +1,44 @@
+﻿@model ExamDetailsVM
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("StudentIndex", "Exam")">Testovi</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Detalji</span>
+        </li>
+    </ul>
+</div>
+
+<div class="card card-body examDetalji">
+    <p>Naziv ispita: <span> @Model.Title <span style="font-size:0.9rem;">(@Model.Course)</span> </span></p>
+    <p>Trajanje: <span>@Model.TimeLimit.TotalMinutes minutes</span></p>
+    <p>Broj pitanja: <span>@Model.NumOfQuestions</span></p>
+    <p>Upute: <span>@Model.Instructions</span></p>
+    <div>
+        <a href="@Url.Action("EvalPage","Exam", new { examID = Model.ExamID})" class="btn btn-danger exam__button">Započni ispit</a>
+    </div>
+</div>
+
+
+<style>
+    .btn-outline-primary{
+        color: #007bff!important;
+    }
+     .btn-outline-primary:hover{
+        color: #fff!important;
+    }
+    .exam__button{
+        margin: 0px auto;
+        display: block;
+        width: fit-content;
+        margin-top: 50px;
+    }
+</style>
+

@@ -1,0 +1,106 @@
+﻿@model List<CourseVM>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a href="@Url.Action("Home", "Dashboard")">Radna ploča</a>
+            <i class="fa fa-chevron-right"></i>
+        </li>
+        <li>
+            <span>Kursevi</span>
+        </li>
+    </ul>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary btn-popup" data-container="body" data-modaltitle="Dodaj kurs" data-url="@Url.Action("DodajForma","Course")"><i class="fa fa-plus-circle"></i> Dodaj kurs</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+
+            @foreach (CourseVM x in Model)
+            {
+                @if (x.CourseName != null)
+                {
+                   
+                    <div class="mt-4 col-sm-4">
+                        <div class="project-box">
+                            <h6>@x.CourseName</h6>
+                            <div class="media" style="border-bottom: 1px solid rgb(244, 244, 244);">
+                                <div class="media-body" style="padding-bottom: 0.5rem;">
+                                    <div style="margin-bottom: 1.55rem;">
+                                        <p>@x.CourseSection</p>
+                                    </div>
+                                    <div style=" margin-bottom: 1.55rem;">
+                                        <p>@x.Notes</p>
+                                    </div>
+                                    <p class="f-12 date" style="text-align: right;">@x.Start.ToShortDateString() - @x.End.ToShortDateString()</p>
+                                    <p class="f-12 date" style="text-align: right; color: #007bff;"><a style=" cursor:pointer;" href="@Url.Action("Detalji","Course",new { courseID=x.CourseID})">Detalji</a></p>
+                                </div>
+                            </div>
+                            <div class="row" style="    margin-top: 20px;">
+                                <div class="col-sm-6 col-3">
+                                    <a data-container="body" data-modaltitle="Uredi kurs" data-url="@Url.Action("EditCourse","Course",new { courseID=x.CourseID})" class=" btn-popup btn btn-outline-primary btn-block btn-sm" style="padding: 0.375rem 0.75rem; color: #007bff;">Ažuriraj</a>
+                                </div>
+                                <div class="col-sm-6 col-3">
+                                    <a class="btn btn-outline-danger btn-block btn-sm" style="padding: 0.375rem 0.75rem;" href="/Course/Obrisi?CourseID=@x.CourseID">Obriši</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<style>
+    label {
+        margin-bottom: 0px;
+    }
+
+    .container-fluid {
+        padding: 15px;
+        background: white;
+        margin-bottom: 25px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+    }
+
+    .btn-popup {
+        width: 100%;
+    }
+
+    .project-box {
+        border: 1px solid #efefef;
+        border-radius: 5px;
+        padding: 30px;
+        background-color: #fff;
+    }
+    .btn-outline-primary:hover{
+        color:white!important;
+    }
+</style>

@@ -1,0 +1,124 @@
+﻿@model RegisterVM
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div class="registration">
+    <div class="registration__form">
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <h4 class="registration__form--heading">Kreiraj nalog</h4>
+                    <div class="registration__form--group">
+                        <label asp-for="FirstName" class="registration__form--label"></label>
+                        <input asp-for="FirstName" class="registration__form--input" />
+                        <span asp-validation-for="FirstName" class="registration__form--error"></span>
+                    </div>
+                     <div class="registration__form--group">
+                <label asp-for="LastName" class="registration__form--label"></label>
+                <input asp-for="LastName" class="registration__form--input" />
+                <span asp-validation-for="LastName" class="registration__form--error"></span>
+            </div>
+           
+            <div class="registration__form--group">
+                <label asp-for="UserName" class="registration__form--label"></label>
+                <input asp-for="UserName" class="registration__form--input" />
+                <span asp-validation-for="UserName" class="registration__form--error"></span>
+            </div>
+            <div class="registration__form--group">
+                <label asp-for="Email" class="registration__form--label"></label>
+                <input asp-for="Email" class="registration__form--input" />
+                <span asp-validation-for="Email" class="registration__form--error"></span>
+            </div>
+            <div class="registration__form--group">
+                <label asp-for="Password" class="registration__form--label"></label>
+                <input asp-for="Password" class="registration__form--input" />
+                <span asp-validation-for="Password" class="registration__form--error"></span>
+            </div>
+            <div class="registration__form--group">
+                <label asp-for="ConfirmPassword" class="registration__form--label"></label>
+                <input asp-for="ConfirmPassword" class="registration__form--input" />
+                <span asp-validation-for="ConfirmPassword" class="registration__form--error"></span>
+            </div>
+            <div class="buttons">
+            <button type="submit" class="btn btn-outline-primary">Registracija</button>
+                <a href="@Url.Action("Login","Account")">Prijava</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+    .registration {
+        width: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Open Sans;
+    }
+.registration__form {
+    border-radius: 5px;
+    background-color: rgba(231,239,246,0.4);
+    padding: 1.25rem 3.438rem;
+    width: 25.125rem;
+    box-shadow: 0px 17px 37px -6px rgba(173,203,227,0.58);
+}
+.registration__form--heading {
+    color: #4b86b4;
+    font-size: 1.5rem;
+    margin-bottom: 9px;
+}
+.registration__form--group {
+    margin: 10px 0;
+    color: #4b86b4;
+    width:100%;
+}
+.registration__form--input {
+    width: 100%;
+    padding: 7px 20px;
+    display: inline-block;
+    border: 1px solid #adcbe3;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.input-validation-error{
+    border: 1px solid red;
+}
+.registration__form--label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.02px;
+    margin-bottom: .3rem;
+}
+.registration__form--button {
+    padding: 9px 25px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #63ace5;
+    font-weight: 500;
+    color: white;
+    font-size: 17px;
+}
+.registration__form--error {
+    color: #f37070;
+    font-size: 13px;
+}
+a:hover{
+    text-decoration:none;
+}
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 28px;
+}
+</style>

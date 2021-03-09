@@ -1,0 +1,185 @@
+﻿@model LoginVM
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link href="~/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/fonts/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/fonts/iconic/css/material-design-iconic-font.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/vendor/animate/animate.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/vendor/css-hamburgers/hamburgers.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/vendor/animsition/css/animsition.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/vendor/select2/select2.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/vendor/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link href="~/css/login1.css" rel="stylesheet" />
+    <link href="~/css/login2.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                <form asp-controller="Account" asp-action="Login" method="post" class="login100-form validate-form">
+                    <span class="login100-form-title p-b-49">
+                        Login
+                    </span>
+                    <a class="btn btn-outline-info" asp-action="GoogleLogin"><i class="fa fa-google" aria-hidden="true"></i> Log In With Google</a>
+
+
+                    <div class="wrap-input100 validate-input m-b-23" data-validate="Korisničko ime je obavezno polje">
+                        <span class="label-input100">Korisničko ime</span>
+                        <input asp-for="Username" class="input100" type="text" placeholder="Unesite korisničko ime" autocomplete="off">
+                        <span class="focus-input100" data-symbol="&#xf206;"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Lozinka je obavezno polje">
+                        <span class="label-input100">Lozinka</span>
+                        <input class="input100" asp-for="Password" placeholder="Unesite lozinku">
+                        <span class="focus-input100" data-symbol="&#xf190;"></span>
+                    </div>
+
+                    <div asp-validation-summary="All" style="text-align: center; margin-top: 10px;" class="text-danger"></div>
+
+                    <div class="text-right p-t-8 p-b-31">
+                        <a href="@Url.Action("ForgotPassword", "Account")">
+                            Zaboravili ste lozinku?
+                        </a>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn" type="submit" id="log_in" data-loading-text="Prijava korisnika...">
+                                Prijava
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex-col-c p-t-155">
+
+                        <a href="@Url.Action("Register", "Account")" class="txt2">
+                            Registrujte se
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/animsition/js/animsition.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/select2/select2.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/daterangepicker/moment.js"></script>
+    <script src="~/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/js/login.js"></script>
+
+</body>
+</html>
+
+<style>
+    .wrap-login100{
+        border-radius: 5px;
+        background-color: rgba(231,239,246,0.4);
+        padding: 1.25rem 3.438rem;
+        width: 25.125rem;
+        box-shadow: 0px 17px 37px -6px rgba(173, 203, 227, 0.58);
+}
+    .container-login100{
+        background:#fff!important;
+    }
+    .login100-form-title {
+        color: #4b86b4;
+        font-size: 1.85rem;
+        margin-bottom: 9px;
+        text-align:left;
+        padding-bottom: 30px;
+    }
+   .wrap-login100-form-btn {
+    width: 80%;
+    border-radius: 10px;
+    }
+   .login100-form-bgbtn{
+       background: -webkit-linear-gradient(right, #4b86b4, #4b86b4d9,#4b86b4d9, #4b86b4);
+   }
+   .login100-form-btn{
+       height:45px;
+   }
+    .btn-outline-info{
+        margin: 0 auto;
+        display: block;
+        width: fit-content;
+        margin-bottom: 20px;
+    }
+    .label-input100{
+        font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.02px;
+    margin-bottom: .3rem;
+    color: #4b86b4;
+    }
+    a, .input100, .txt2{
+    color: #4b86b4;
+
+    }
+    .txt2:hover{
+        border: none;
+    background: none;
+    color:  #4b86b4;
+            font-size: 17px;
+    }
+input::-webkit-input-placeholder { color:#4b86b45e;}
+input:-moz-placeholder {
+    color: #4b86b45e;
+}
+input::-moz-placeholder {
+    color: #4b86b45e;
+}
+input:-ms-input-placeholder {
+    color: #4b86b45e;
+}
+.wrap-input100{
+    border-bottom-color:#4b86b45e;
+}
+.focus-input100::after{
+    color: #4b86b45e;
+
+}
+.input100:focus + .focus-input100::after{
+    color: #4b86b4;
+}
+.focus-input100::before{
+    background: #4b86b4;
+
+}
+</style>

@@ -1,0 +1,45 @@
+﻿@model ExamResultsVM
+@{
+    ViewData["Title"] = "ListOfResults";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="@Url.Action("ProfessorIndex", "Results")">Rezultati</a>
+                <i class="fa fa-chevron-right"></i>
+            </li>
+            <li>
+                <span>Lista rezultata</span>
+            </li>
+        </ul>
+    </div>
+
+<div class="card card-body">
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Rezultat</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Results)
+            {
+                <tr>
+                    <td>@item.StudentName</td>
+                    <td>@item.Result%</td>
+                    <td><a href="@Url.Action("ResultDetails","Results", new { examID = Model.ExamID, studentID = item.StudentID})">Detalji</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    td a{
+        color: #007bff!important;
+        cursor:pointer;
+    }
+</style>

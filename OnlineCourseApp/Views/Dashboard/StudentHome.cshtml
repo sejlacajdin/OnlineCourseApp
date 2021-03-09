@@ -1,0 +1,110 @@
+﻿@model DashboardVM
+@{
+    ViewData["Title"] = "StudentHome";
+}
+
+<div class="dashboard__content">
+    <div class="slider demo">
+        @foreach (CourseVM x in Model.Courses)
+        {
+            @if (x.CourseName != null)
+            {
+        <div class="dashboardContent__slide">
+            <h6>@x.CourseName</h6>
+            <div class="media" style="border-bottom: 1px solid rgb(244, 244, 244);">
+                <div class="media-body" style="padding-bottom: 0.5rem;">
+                    <div style="margin-bottom: 1.2rem;">
+                        <p>@x.CourseSection</p>
+                    </div>
+                    <div style=" margin-bottom: 1.2rem;">
+                        <p>@x.Notes</p>
+                    </div>
+                    <p class="f-12 date" style="text-align: right;">@x.Start.ToShortDateString() - @x.End.ToShortDateString()</p>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px; width:100%;">
+                <div class="col-12" style="padding:0px;">
+                    <a href="@Url.Action("AddParticipant","CourseParticipant",new {courseID=x.CourseID })" class="btn btn-outline-primary btn-block btn-sm" style="padding: 0.375rem 0.75rem; color: #007bff;">Prijavi se</a>
+                </div>     
+            </div>
+        </div>
+            }
+        }
+    </div>
+     <div class="col-md-4 bg-white">
+        @if (Model.Announcements != null)
+        {
+            @await Html.PartialAsync("/Views/Announcement/_LastAnnouncements.cshtml", Model)
+
+        }
+    </div>
+</div>
+
+@section  Scripts{
+
+<style>
+    .dashboard__content{
+        width:100%;
+        margin:0px auto;
+    }
+    .slick-slide{
+        /*width:250px!important;*/
+        margin:0px 14px;
+    }
+    .slick-slider {
+        width: 100%;
+        margin: 0px auto;
+    }
+
+    .slick-track {
+        padding: 25px 0px;
+        margin-left:0px!important;
+    }
+    .dashboardContent__slide{
+     background-color:white;
+     box-shadow: 0 9px 18px 0 rgba(6, 1, 108, 0.05);
+     border-radius:10px;
+     height:265px;
+     padding:20px;
+    }
+    .slide__top{
+        width:100%;
+        height:150px;
+        border-top-left-radius:15px;
+        border-top-right-radius:15px;
+        background-position:center;
+        background-size:cover;
+        background-repeat:no-repeat;
+    }
+    .slide__bottom{
+     padding:6px 13px;
+
+    }
+    .dashboardContent__slide h6{
+        font-size:1.1rem;
+    }
+    .dashboardContent__slide p{
+        margin-bottom:0.4rem;
+        font-size:0.84rem;
+    }
+        .btn-outline-primary:hover{
+        color:white!important;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+  $('.demo').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      centerMode: true,
+      draggable:true,
+      focusOnSelect:true,
+      pauseOnHover:true,
+      pauseOnFocus: true,
+
+});
+});
+</script>
+}

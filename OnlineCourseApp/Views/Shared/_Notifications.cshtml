@@ -1,0 +1,26 @@
+﻿@{
+    var SuccessNotification = TempData["SuccessNotification"];
+    var ErrorNotification = TempData["ErrorNotification"];
+
+    if (SuccessNotification != null)
+    {
+    <div class="alert alert-success" id="message" role="alert">
+        @SuccessNotification
+    </div>
+    }
+    if (ErrorNotification != null)
+    {
+        <div class="alert alert-danger" id="message" role="alert">
+            @ErrorNotification
+        </div>
+    }
+}
+<style>
+    #message {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        z-index: 999;
+        width: auto;
+    }
+</style>

@@ -1,0 +1,58 @@
+﻿@using OnlineCourseApp.Data.Models.Basic
+@model QuestionDetailsVM
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+      int examID = ViewBag.ExamID;
+}
+
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <a href="@Url.Action("Details", "Exam", new { examID = examID})">Test</a>
+                <i class="fa fa-chevron-right"></i>
+            </li>
+            <li>
+                <span>Detalji pitanja</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card card-body">
+
+        <div class="card card-body examDetalji">
+            <p>Kateogrija pitanja: <span>   @Model.QuestionCategory</span></p>
+            <p>Vrsta pitanja: <span>@Extensions.GetEnumDisplayName(Model.QuestionType)</span></p>
+            <p>Bodovi: <span>   @Model.Points</span></p>
+            <p>Pitanje: <span>  @Model.Text</span></p>
+
+        </div>
+
+        @if(Model.QuestionType.ToString() != "Essay")
+        {
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <td>Odgovor</td>
+                    <td>Postotak</td>
+                    <td>Tačnost</td>
+                    <td>Akcije</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Choises)
+                {
+                    <tr>
+                        <td>@item.Text</td>
+                        <td>@item.Points%</td>
+                        <td>@item.IsCorrect</td>
+                        <td>
+                            <a data-url="@Url.Action("Edit","Choice", new { choiceID=item.ChoiceID, examID = examID})" data-container="body" data-modaltitle="Uredi odgovor" class="btn-popup"><i class="fa fa-edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Uredi"></i></a>
+                            <a href="@Url.Action("Delete", "Choice", new { choiceID = item.ChoiceID ,questionID = Model.QuestionID, examID = examID})"><i class="fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="Obriši"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>
